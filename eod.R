@@ -829,7 +829,8 @@ main <- function() {
   error_count <- 0
   total_new_records <- 0
   
-  for (i in seq_along(all_syms)) {
+#  for (i in seq_along(all_syms)) {
+  for (i in 1:2) {
     sym <- all_syms[i]
     # RTDB key masih encoded untuk lookup date_ranges
     enc <- encode_ticker_for_rtdb(sym)
