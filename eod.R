@@ -235,7 +235,7 @@ upload_to_r2 <- function(data, key, r2_encoded_ticker) {
     }
     
     # Gunakan ticker asli untuk nama file lokal juga
-    temp_file <- file.path(TEMP_DIR, basename(key))
+    temp_file <- paste0(file.path(TEMP_DIR, basename(key)), ".txt")
     json_content <- toJSON(data, auto_unbox = TRUE, digits = 6, pretty = FALSE)
     writeLines(json_content, temp_file)
     
