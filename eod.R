@@ -798,6 +798,7 @@ main <- function() {
   # Step 1: Read symbols from RTDB
   message("[Step 1] Reading symbols from Firebase RTDB...")
   sym_raw <- read_rtdb("metadata/symbols")
+  sym_raw[[1]] <- "GC=F"
   #sym_raw <- as.list(fromJSON("/Users/bennyky/Documents/R/symbols_to_save.json"))
   
   if (is.null(sym_raw)) {
@@ -830,7 +831,7 @@ main <- function() {
   total_new_records <- 0
   
 #  for (i in seq_along(all_syms)) {
-  for (i in 1:2) {
+  for (i in 1:1) {
     sym <- all_syms[i]
     # RTDB key masih encoded untuk lookup date_ranges
     enc <- encode_ticker_for_rtdb(sym)
