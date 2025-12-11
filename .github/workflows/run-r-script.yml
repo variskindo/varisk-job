@@ -26,7 +26,8 @@ jobs:
       # Install dependencies (jika ada)
       - name: Install R packages
         run: |
-          install.packages(c("httr", "jsonlite", "dplyr"))
+          install.packages(c("httr", "jsonlite", "dplyr", "quantmod", "rugarch", "TTR", "jsonlite", "httr2", 
+                       "lubridate", "dplyr"))
         shell: Rscript {0}
       
       # Jalankan script
