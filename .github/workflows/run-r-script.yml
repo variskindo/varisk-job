@@ -2,7 +2,7 @@ name: Run R Script Daily
 
 on:
   schedule:
-    - cron: '0 23 * * *'  # 23:00 UTC = 06:00 WIB
+    - cron: '0 23 * * *'
   workflow_dispatch:
 
 permissions:
@@ -11,42 +11,40 @@ permissions:
 jobs:
   run-script:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.3.0'
-      
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
-      
+
       - name: Install R packages
         run: |
           install.packages(c("httr", "jsonlite", "dplyr", "quantmod", "rugarch", "TTR", "lubridate"))
         shell: Rscript {0}
-      
-      # Install Node.js dan Wrangler CLI (TAMBAHAN BARU)
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
       - name: Install Wrangler CLI
         run: npm install -g wrangler
-      
-      # Jalankan script dengan Cloudflare credentials
+
       - name: Run R script
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: Rscript eod.R
-      
+
       - name: Commit and push results
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -54,31 +52,3 @@ jobs:
           git add -A
           git diff --staged --quiet || git commit -m "Auto-update $(date +'%Y-%m-%d %H:%M')"
           git push
-```
-
-3. **Commit changes**
-
-## Tambahkan Cloudflare Secrets
-
-Karena script Anda upload ke Cloudflare R2, Anda perlu menambahkan credentials:
-
-1. **Klik tab "Settings"** di repository
-
-2. **Di sidebar kiri**, klik **"Secrets and variables"** → **"Actions"**
-
-3. **Klik "New repository secret"** dan tambahkan:
-
-   | Name | Value |
-   |------|-------|
-   | `CLOUDFLARE_ACCOUNT_ID` | Account ID Cloudflare Anda |
-   | `CLOUDFLARE_API_TOKEN` | API Token Cloudflare Anda |
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Settings → Secrets and variables → Actions                 │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Repository secrets                                         │
-│                                                             │
-│  [ New repository secret ]  ←←← KLIK INI                    │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
