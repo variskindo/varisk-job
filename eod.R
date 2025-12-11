@@ -59,7 +59,7 @@ suppressPackageStartupMessages({
 # Set TRUE untuk eksekusi di local machine (iMac, MacBook, dll)
 # Set FALSE untuk eksekusi di GitHub Actions atau server tanpa persistent storage
 # ==============================================================================
-USE_LOCAL_CACHE <- as.logical(Sys.getenv("USE_LOCAL_CACHE", "TRUE"))
+USE_LOCAL_CACHE <- FALSE #as.logical(Sys.getenv("USE_LOCAL_CACHE", "TRUE"))
 
 # Cloudflare R2 Configuration
 R2_BUCKET      <- "varisk-kancil"
@@ -70,7 +70,7 @@ R2_HIST_PREFIX <- "historical"
 
 # Local cache directory - untuk menyimpan salinan JSON agar tidak perlu download dari R2
 # Hanya digunakan jika USE_LOCAL_CACHE = TRUE
-LOCAL_CACHE_DIR <- FALSE # Sys.getenv("LOCAL_CACHE_DIR", "/Users/bennyky/Documents/R/r2_cache/prices")
+LOCAL_CACHE_DIR <- "./cache" #Sys.getenv("LOCAL_CACHE_DIR", "/Users/bennyky/Documents/R/r2_cache/prices")
 
 # Local temp directory untuk files sebelum upload
 TEMP_DIR       <- file.path(tempdir(), "r2_upload")
