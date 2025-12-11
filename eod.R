@@ -798,7 +798,7 @@ main <- function() {
   # Step 1: Read symbols from RTDB
   message("[Step 1] Reading symbols from Firebase RTDB...")
   sym_raw <- read_rtdb("metadata/symbols")
-  sym_raw <- as.list(fromJSON("/Users/bennyky/Documents/R/symbols_to_save.json"))
+  #sym_raw <- as.list(fromJSON("/Users/bennyky/Documents/R/symbols_to_save.json"))
   
   if (is.null(sym_raw)) {
     stop("Failed to read symbols from RTDB.")
